@@ -1,7 +1,5 @@
 local set = vim.opt
 local keymap = vim.keymap
-local opts = { noremap = true, silent = true }
-
 set.number = true
 set.relativenumber = true
 set.clipboard = unnamedplus
@@ -16,9 +14,14 @@ vim.api.nvim_create_autocmd({"TextYankPost"}, {
 -- End highlight content after yank.
 
 -- Keybindings
+vim.g.mapleader = " "
+local opts = { noremap = true, silent = true }
+
 -- Split window
-keymap.set("n", "ss", ":split<Return>", opts)
-keymap.set("n", "sv", ":vsplit<Return>", opts)
+keymap.set("n", "ss", ":vsplit<Return>", opts)
+keymap.set("n", "sv", ":split<Return>", opts)
+keymap.set("n", "<Leader>s", ":vsplit<Return>", opts)
+keymap.set("n", "<Leader>v", ":split<Return>", opts)
 
 -- Move window
 keymap.set("n", "sh", "<C-w>h")
@@ -34,3 +37,6 @@ keymap.set("n", "<C-w><down>", "<C-w>-")
 
 -- End keymap define
 
+-- https://www.reddit.com/r/vim/comments/2k4cbr/problem_with_gj_and_gk/
+vim.keymap.set("n", "j", [[ v:count ? 'j' : 'gj' ]], { noremap = true, expr = true })
+vim.keymap.set("n", "k", [[ v:count ? 'k' : 'gk' ]], { noremap = true, expr = true })
