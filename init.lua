@@ -93,7 +93,7 @@ require('lazy').setup({
     -- 前置需要安装 ripgrep https://github.com/BurntSushi/ripgrep?tab=readme-ov-file#installation
     {
         "nvim-telescope/telescope.nvim",
-	tag = "0.1.1",
+	tag = "0.1.5",
 	dependencies = {
 	    "nvim-lua/plenary.nvim"
 	}
