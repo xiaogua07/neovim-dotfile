@@ -4,9 +4,18 @@ set.number = true
 set.relativenumber = true
 set.clipboard = unnamedplus
 
+set.tabstop = 4
+set.softtabstop = 4
+set.shiftwidth = 4
+set.expandtab = true
+set.autoindent = true
+set.smartindent = true
+set.number = true
+set.cursorline = true
+
 -- Highlight content after yank.
 vim.api.nvim_create_autocmd({"TextYankPost"}, {
-   pattern = { "*" },
+    pattern = { "*" },
     callback = function ()
         vim.highlight.on_yank({ timeout = 160 })
     end,
@@ -55,7 +64,7 @@ if not vim.loop.fs_stat(lazypath) then
         "--filter=blob:none",
         "https://github.com/folke/lazy.nvim.git",
         "--branch=stable",
-	lazypath
+        lazypath
     })
 end
 
@@ -65,49 +74,54 @@ require('lazy').setup({
     -- theme
     {
         "RRethy/nvim-base16",
-	lazy = true,
+        lazy = true,
     },
     -- 语法解析、高亮
     {
         "nvim-treesitter/nvim-treesitter",
-	run = ":TSUpdate"
+        run = ":TSUpdate"
     },
     -- UI 弹窗提示
     {
         "folke/noice.nvim",
-	event = "VeryLazy",
-	opts = {},
-	dependencies = {
-	    "MunifTanjim/nui.nvim",
-	    "rcarriga/nvim-notify"
-	}
+        event = "VeryLazy",
+        opts = {},
+        dependencies = {
+            "MunifTanjim/nui.nvim",
+            "rcarriga/nvim-notify"
+        }
     },
     -- 记住上次编辑状态
     {
         "folke/persistence.nvim",
-	event = "BufReadPre",
-	opts = {}
+        event = "BufReadPre",
+        opts = {}
     },
     -- 提示 Keybinding
     {
         "folke/which-key.nvim",
-	opts = {}
+        opts = {}
     },
     -- 安装 Telescope https://github.com/nvim-telescope/telescope.nvim?tab=readme-ov-file#getting-started
     -- 前置需要安装 ripgrep https://github.com/BurntSushi/ripgrep?tab=readme-ov-file#installation
     {
         "nvim-telescope/telescope.nvim",
-	tag = "0.1.5",
-	dependencies = {
-	    "nvim-lua/plenary.nvim"
-	},
-	cmd = "Telescope",
-	keys = {
-	    { "<leader>p", ":Telescope find_files<CR>", desc =  "Find files" },
-	    { "<leader>q", ":Telescope oldfiles<CR>", desc = "Old files" },
-	    { "<leader>P", ":Telescope live_grep<CR>", desc = "Grep files" },
-	    { "<leader>rs", ":Telescope resume<CR>", desc = "Resume" },
-	}
+        tag = "0.1.5",
+        dependencies = {
+            "nvim-lua/plenary.nvim"
+        },
+        cmd = "Telescope",
+        keys = {
+            { "<leader>p", ":Telescope find_files<CR>", desc =  "Find files" },
+            { "<leader>q", ":Telescope oldfiles<CR>", desc = "Old files" },
+            { "<leader>P", ":Telescope live_grep<CR>", desc = "Grep files" },
+            { "<leader>rs", ":Telescope resume<CR>", desc = "Resume" },
+        }
+    },
+    -- LSP
+    -- LSP Mason https://github.com/williamboman/mason.nvim
+    {
+        "williamboman/mason.nvim",
     },
 })
 -- End lazy.nvim
@@ -118,6 +132,7 @@ vim.cmd.colorscheme("base16-tender")
 
 -- UI
 -- End UI
+
 
 
 
