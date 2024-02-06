@@ -151,6 +151,42 @@ require('lazy').setup({
         },
         event = "VeryLazy",
     },
+    -- neodev: https://github.com/folke/neodev.nvim
+    {
+        "folke/neodev.nvim",
+        event = "VeryLazy",
+    },
+    -- nullls: https://github.com/jose-elias-alvarez/null-ls.nvim
+    {
+        "jose-elias-alvarez/null-ls.nvim",
+        event = "VeryLazy",
+        config = function()
+            local null_ls = require("null-ls")
+
+            null_ls.setup({
+                sources = {
+                    null_ls.builtins.formatting.stylua,
+                    null_ls.builtins.formatting.black,
+                },
+                on_attach = function(client, bufnr)
+                    local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+                    if client.supports_method("textDocument/formatting") then
+                        vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+                        vim.api.nvim_create_autocmd("BufWritePre", {
+                            group = augroup,
+                            buffer = bufnr,
+                            callback = function()
+                                -- on 0.8, you should use vim.lsp.buf.format({ bufnr = bufnr }) instead
+                                -- on later neovim version, you should use vim.lsp.buf.format({ async = false }) instead
+                                -- vim.lsp.buf.formatting_sync()
+                                vim.lsp.buf.format({ async = false })
+                            end,
+                        })
+                    end
+                end,
+            })
+        end
+    },
 })
 -- End lazy.nvim
 
@@ -164,6 +200,8 @@ vim.cmd.colorscheme("base16-tender")
 -- LSP setup language servers.
 require("mason").setup()
 require("mason-lspconfig").setup()
+
+require("neodev").setup({})
 
 -- 突然加速，没看懂1
 -- Set up lspconfig.
@@ -331,5 +369,12 @@ cmp.setup.cmdline(':', {
 })
 
 -- End cmp Config
+
+-- Setup language lsp
+require("lspconfig").html.setup({
+    capabilities = capabilities,
+})
+-- End setup language lsp
+
 
 -- Example
