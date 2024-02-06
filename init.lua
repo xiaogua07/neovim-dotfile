@@ -137,7 +137,7 @@ require('lazy').setup({
             "williamboman/mason-lspconfig.nvim",
         },
     },
-    -- Config auto complete https://github.com/hrsh7th/nvim-cmp
+    -- 代码补全 Config auto complete https://github.com/hrsh7th/nvim-cmp
     {
         "hrsh7th/nvim-cmp",
         dependencies = {
@@ -151,12 +151,12 @@ require('lazy').setup({
         },
         event = "VeryLazy",
     },
-    -- neodev: https://github.com/folke/neodev.nvim
+    -- Neovim 配置文档补全 neodev: https://github.com/folke/neodev.nvim
     {
         "folke/neodev.nvim",
         event = "VeryLazy",
     },
-    -- nullls: https://github.com/jose-elias-alvarez/null-ls.nvim
+    -- 自动格式化 nullls: https://github.com/jose-elias-alvarez/null-ls.nvim
     {
         "jose-elias-alvarez/null-ls.nvim",
         event = "VeryLazy",
@@ -186,6 +186,12 @@ require('lazy').setup({
                 end,
             })
         end
+    },
+    -- Git 插件: https://github.com/tpope/vim-fugitive
+    {
+        "tpope/vim-fugitive",
+        event = "VeryLazy",
+        cmd = "Git",
     },
 })
 -- End lazy.nvim
