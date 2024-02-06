@@ -57,10 +57,21 @@ end
 
 set.rtp:prepend(lazypath)
 
-require('lazy').setup({})
+require('lazy').setup({
+    {
+        "RRethy/nvim-base16",
+	lazy = true,
+    },
+    {
+        "nvim-treesitter/nvim-treesitter",
+	run = ":TSUpdate"
+    }
+})
 -- End lazy.nvim
 
-
+-- Themecolor
+vim.cmd.colorscheme("base16-tender")
+-- End themecolor
 
 
 
