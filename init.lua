@@ -58,14 +58,17 @@ end
 set.rtp:prepend(lazypath)
 
 require('lazy').setup({
+    -- theme
     {
         "RRethy/nvim-base16",
 	lazy = true,
     },
+    -- 语法解析、高亮
     {
         "nvim-treesitter/nvim-treesitter",
 	run = ":TSUpdate"
     },
+    -- UI 弹窗提示
     {
         "folke/noice.nvim",
 	event = "VeryLazy",
