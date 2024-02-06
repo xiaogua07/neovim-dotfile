@@ -65,6 +65,15 @@ require('lazy').setup({
     {
         "nvim-treesitter/nvim-treesitter",
 	run = ":TSUpdate"
+    },
+    {
+        "folke/noice.nvim",
+	event = "VeryLazy",
+	opts = {},
+	dependencies = {
+	    "MunifTanjim/nui.nvim",
+	    "rcarriga/nvim-notify"
+	}
     }
 })
 -- End lazy.nvim
@@ -73,6 +82,8 @@ require('lazy').setup({
 vim.cmd.colorscheme("base16-tender")
 -- End themecolor
 
+-- UI
+-- End UI
 
 
 
