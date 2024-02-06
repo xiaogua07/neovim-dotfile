@@ -202,12 +202,17 @@ require('lazy').setup({
         "tpope/vim-fugitive",
         event = "VeryLazy",
         cmd = "Git",
+        config = function()
+            -- Convert
+            vim.cmd.cnoreabbrev([[git Git]])
+            vim.cmd.cnoreabbrev([[gp Git push]])
+        end,
     },
     -- 文件内展示 GIT 变动的插件 https://github.com/lewis6991/gitsigns.nvim
     {
         "lewis6991/gitsigns.nvim",
         event = "VeryLazy",
-        cofig = function()
+        config = function()
             require('gitsigns').setup()
         end,
     },
@@ -400,6 +405,7 @@ require("lspconfig").html.setup({
     capabilities = capabilities,
 })
 -- End setup language lsp
+
 
 
 -- Example
