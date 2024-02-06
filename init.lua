@@ -75,9 +75,19 @@ set.rtp:prepend(lazypath)
 
 require('lazy').setup({
     -- theme
+    -- {
+    -- "RRethy/nvim-base16",
+    -- lazy = true,
+    -- },
     {
-        "RRethy/nvim-base16",
+        "craftzdog/solarized-osaka.nvim",
         lazy = true,
+        priority = 1000,
+        opts = function()
+            return {
+                transparent = true
+            }
+        end
     },
     -- 语法解析、高亮
     {
@@ -193,11 +203,20 @@ require('lazy').setup({
         event = "VeryLazy",
         cmd = "Git",
     },
+    -- 文件内展示 GIT 变动的插件 https://github.com/lewis6991/gitsigns.nvim
+    {
+        "lewis6991/gitsigns.nvim",
+        event = "VeryLazy",
+        cofig = function()
+            require('gitsigns').setup()
+        end,
+    },
 })
 -- End lazy.nvim
 
 -- Themecolor
-vim.cmd.colorscheme("base16-tender")
+-- vim.cmd.colorscheme("base16-tender")
+vim.cmd.colorscheme("solarized-osaka")
 -- End themecolor
 
 -- UI
