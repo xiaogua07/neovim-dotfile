@@ -1,9 +1,12 @@
 local set = vim.opt
 local keymap = vim.keymap
+
+-- Set number & line
 set.number = true
 set.relativenumber = true
 set.clipboard = unnamedplus
 
+-- Set Indent
 set.tabstop = 4
 set.softtabstop = 4
 set.shiftwidth = 4
@@ -14,9 +17,9 @@ set.number = true
 set.cursorline = true
 
 -- Highlight content after yank.
-vim.api.nvim_create_autocmd({"TextYankPost"}, {
+vim.api.nvim_create_autocmd({ "TextYankPost" }, {
     pattern = { "*" },
-    callback = function ()
+    callback = function()
         vim.highlight.on_yank({ timeout = 160 })
     end,
 })
@@ -112,17 +115,29 @@ require('lazy').setup({
         },
         cmd = "Telescope",
         keys = {
-            { "<leader>p", ":Telescope find_files<CR>", desc =  "Find files" },
-            { "<leader>q", ":Telescope oldfiles<CR>", desc = "Old files" },
-            { "<leader>P", ":Telescope live_grep<CR>", desc = "Grep files" },
-            { "<leader>rs", ":Telescope resume<CR>", desc = "Resume" },
+            { "<leader>p",  ":Telescope find_files<CR>", desc = "Find files" },
+            { "<leader>q",  ":Telescope oldfiles<CR>",   desc = "Old files" },
+            { "<leader>P",  ":Telescope live_grep<CR>",  desc = "Grep files" },
+            { "<leader>rs", ":Telescope resume<CR>",     desc = "Resume" },
         }
     },
     -- LSP
     -- LSP Mason https://github.com/williamboman/mason.nvim
+    -- After install mason, we can use :MasonInstall lsp,ex: pyright
     {
         "williamboman/mason.nvim",
+        event = "VeryLazy",
     },
+    -- LSP config https://github.com/neovim/nvim-lspconfig
+    {
+        "neovim/nvim-lspconfig",
+        event = "VeryLazy",
+        dependencies = {
+            -- Mason lspconfig https://github.com/williamboman/mason-lspconfig.nvim
+            "williamboman/mason-lspconfig.nvim",
+        },
+    },
+
 })
 -- End lazy.nvim
 
@@ -133,7 +148,73 @@ vim.cmd.colorscheme("base16-tender")
 -- UI
 -- End UI
 
+-- LSP setup language servers.
+require("mason").setup()
+require("mason-lspconfig").setup()
 
+-- 突然加速，没看懂1
+require("lspconfig").lua_ls.setup({
+    settings = {
+        Lua = {
+            runtime = {
+                -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+                version = "LuaJIT",
+            },
+            diagnostics = {
+                -- Get the language server to recognize the `vim` global
+                globals = { "vim", "hs" },
+            },
+            workspace = {
+                checkThirdParty = false,
+                -- Make the server aware of Neovim runtime files
+                library = {
+                    -- vim.api.nvim_get_runtime_file("", true),
+                    "/Applications/Hammerspoon.app/Contents/Resources/extensions/hs/",
+                    vim.fn.expand("~/lualib/share/lua/5.4"),
+                    vim.fn.expand("~/lualib/lib/luarocks/rocks-5.4"),
+                    "/opt/homebrew/opt/openresty/lualib",
+                },
+            },
+            completion = {
+                callSnippet = "Replace",
+            },
+            -- Do not send telemetry data containing a randomized but unique identifier
+            telemetry = {
+                enable = false,
+            },
+        },
+    },
+})
 
+-- 突然加速 没看懂2
+-- Use LspAttach autocommand to only map the following keys
+-- after the language server attaches to the current buffer
+vim.api.nvim_create_autocmd('LspAttach', {
+    group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+    callback = function(ev)
+        -- Enable completion triggered by <c-x><c-o>
+        vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
 
-
+        -- Buffer local mappings.
+        -- See `:help vim.lsp.*` for documentation on any of the below functions
+        local opts = { buffer = ev.buf }
+        vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+        vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+        vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+        vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+        vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
+        vim.keymap.set('n', '<Leader>wa', vim.lsp.buf.add_workspace_folder, opts)
+        vim.keymap.set('n', '<Leader>wr', vim.lsp.buf.remove_workspace_folder, opts)
+        vim.keymap.set('n', '<Leader>wl', function()
+            print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+        end, opts)
+        vim.keymap.set('n', '<Leader>D', vim.lsp.buf.type_definition, opts)
+        vim.keymap.set('n', '<Leader>rn', vim.lsp.buf.rename, opts)
+        vim.keymap.set({ 'n', 'v' }, '<Leader>ca', vim.lsp.buf.code_action, opts)
+        vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+        vim.keymap.set('n', '<Leader>f', function()
+            vim.lsp.buf.format { async = true }
+        end, opts)
+    end,
+})
+-- End LSP setup language servers.
