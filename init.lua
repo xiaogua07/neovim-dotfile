@@ -35,6 +35,10 @@ keymap.set("n", "<C-w><right>", "<C-w>>")
 keymap.set("n", "<C-w><up>", "<C-w>+")
 keymap.set("n", "<C-w><down>", "<C-w>-")
 
+-- Jump file
+keymap.set("n", "<Leader>[", "<C-o>", opts)
+keymap.set("n", "<Leader>]", "<C-i>", opts)
+
 -- End keymap define
 
 -- https://www.reddit.com/r/vim/comments/2k4cbr/problem_with_gj_and_gk/
@@ -96,6 +100,13 @@ require('lazy').setup({
 	tag = "0.1.5",
 	dependencies = {
 	    "nvim-lua/plenary.nvim"
+	},
+	cmd = "Telescope",
+	keys = {
+	    { "<leader>p", ":Telescope find_files<CR>", desc =  "Find files" },
+	    { "<leader>q", ":Telescope oldfiles<CR>", desc = "Old files" },
+	    { "<leader>P", ":Telescope live_grep<CR>", desc = "Grep files" },
+	    { "<leader>rs", ":Telescope resume<CR>", desc = "Resume" },
 	}
     },
 })
