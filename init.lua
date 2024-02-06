@@ -89,6 +89,15 @@ require('lazy').setup({
         "folke/which-key.nvim",
 	opts = {}
     },
+    -- 安装 Telescope https://github.com/nvim-telescope/telescope.nvim?tab=readme-ov-file#getting-started
+    -- 前置需要安装 ripgrep https://github.com/BurntSushi/ripgrep?tab=readme-ov-file#installation
+    {
+        "nvim-telescope/telescope.nvim",
+	tag = "0.1.1",
+	dependencies = {
+	    "nvim-lua/plenary.nvim"
+	}
+    },
 })
 -- End lazy.nvim
 
