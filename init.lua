@@ -77,7 +77,18 @@ require('lazy').setup({
 	    "MunifTanjim/nui.nvim",
 	    "rcarriga/nvim-notify"
 	}
-    }
+    },
+    -- 记住上次编辑状态
+    {
+        "folke/persistence.nvim",
+	event = "BufReadPre",
+	opts = {}
+    },
+    -- 提示 Keybinding
+    {
+        "folke/which-key.nvim",
+	opts = {}
+    },
 })
 -- End lazy.nvim
 
