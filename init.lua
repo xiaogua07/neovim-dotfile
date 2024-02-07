@@ -216,6 +216,17 @@ require('lazy').setup({
             require('gitsigns').setup()
         end,
     },
+    -- Share 代码时，不复制行号 https://github.com/tpope/vim-rhubarb
+    {
+        "tpope/vim-rhubarb",
+        event = "VeryLazy",
+    },
+    -- 标记git 合并时冲突的部分: https://github.com/rhysd/conflict-marker.vim
+    {
+        "rhysd/conflict-marker.vim",
+        event = "VeryLazy",
+    },
+
 })
 -- End lazy.nvim
 
